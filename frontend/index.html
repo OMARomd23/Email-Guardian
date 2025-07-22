@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Guardian - Advanced Email Security</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --cyber: #14b8a6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1a1a1a;
+            --light: #ffffff;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            
+            /* Theme variables */
+            --bg-primary: var(--light);
+            --bg-secondary: var(--gray-100);
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --border-color: var(--gray-200);
+            --card-bg: var(--light);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: var(--gray-900);
+            --bg-secondary: var(--gray-800);
+            --text-primary: var(--light);
+            --text-secondary: var(--gray-300);
+            --border-color: var(--gray-700);
+            --card-bg: var(--gray-800);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .nav-tab:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-indicator.online {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .status-indicator.offline {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Scanner Tab */
+        .scanner-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .email-input-section {
+            grid-column: 1;
+        }
+
+        .options-panel {
+            grid-column: 2;
+        }
+
+        .results-section {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+        }
+
+        .email-textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 0.75rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: 'Inter', monospace;
+            font-size: 0.875rem;
+            resize: vertical;
+            transition: all 0.2s ease;
+        }
+
+        .email-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--card-bg);
+        }
+
+        .email-textarea.drag-over {
+            border-color: var(--cyber);
+            background: rgba(20, 184, 166, 0.05);
+        }
+
+        .char-counter {
+            text-align: right;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .file-upload {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            text-align: center;
+            background: var(--bg-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-upload:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Options Panel */
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--gray-400);
+            transition: 0.3s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .scan-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--cyber));
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .scan-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .scan-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Results Display */
+        .results-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .classification-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge-legitimate {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .badge-spam {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .badge-phishing {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .confidence-display {
+            margin-bottom: 1.5rem;
+        }
+
+        .confidence-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            border-radius: 4px;
+            transition: width 0.8s ease;
+            animation: fillBar 0.8s ease;
+        }
+
+        @keyframes fillBar {
+            from { width: 0%; }
+        }
+
+        .probability-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .probability-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 0.5rem;
+        }
+
+        .probability-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .probability-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .explanation {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--cyber);
+            border-color: var(--cyber);
+        }
+
+        /* History Tab */
+        .history-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .filter-select {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .history-list {
+            space-y: 1rem;
+        }
+
+        .history-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .history-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .history-date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .history-preview {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            max-height: 3em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .history-details {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .history-item.expanded .history-details {
+            display: block;
+        }
+
+        /* Settings Tab */
+        .settings-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-help {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .test-connection {
+            margin-top: 1rem;
+        }
+
+        .system-status {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 4.7s forwards;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+        .toast.warning { background: var(--warning); }
+        .toast.info { background: var(--primary); }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .toast-close:hover {
+            opacity: 1;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateX(100%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .nav-tabs {
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .scanner-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .options-panel {
+                grid-column: 1;
+            }
+
+            .results-section {
+                grid-column: 1;
+            }
+
+            .probability-breakdown {
+                grid-template-columns: 1fr;
+            }
+
+            .history-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .toast {
+                min-width: auto;
+                margin: 0 1rem;
+            }
+        }
+
+        /* Loading States */
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--border-color) 50%, var(--bg-secondary) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 0.25rem;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .visible { display: block !important; }
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 1rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .p-4 { padding: 1rem; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Email Guardian
+            </div>
+            
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="scanner">Scanner</button>
+                <button class="nav-tab" data-tab="history">History</button>
+                <button class="nav-tab" data-tab="settings">Settings</button>
+            </nav>
+            
+            <div class="header-controls">
+                <div class="status-indicator" id="apiStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Connecting...</span>
+                </div>
+                
+                <button class="theme-toggle" id="themeToggle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Scanner Tab -->
+        <div id="scanner" class="tab-content active">
+            <div class="scanner-grid">
+                <!-- Email Input Section -->
+                <div class="email-input-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Email Scanner</h2>
+                        </div>
+                        
+                        <textarea 
+                            id="emailInput" 
+                            class="email-textarea" 
+                            placeholder="Paste your email content here or drag and drop an .eml/.txt file...">
+                        </textarea>
+                        
+                        <div class="char-counter">
+                            <span id="charCount">0</span> characters
+                        </div>
+                        
+                        <div class="file-upload" id="fileUpload">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="17,8 12,3 7,8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Upload Email File (.txt, .eml)
+                            <input type="file" id="fileInput" class="file-input" accept=".txt,.eml,.msg">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Options Panel -->
+                <div class="options-panel">
+                    <div class="card">
+                        <h3 class="card-title">Scan Options</h3>
+                        
+                        <div class="option-group">
+                            <label class="option-label">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="llmValidation" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                Enable LLM Validation
+                            </label>
+                        </div>
+                        
+                        <button id="scanButton" class="scan-button">
+                            <span class="button-text">Scan Email</span>
+                        </button>
+                        
+                        <div class="mt-4">
+                            <h4 style="margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--text-secondary);">Quick Tests:</h4>
+                            <button class="btn" onclick="loadExample('legitimate')">Legitimate Email</button>
+                            <button class="btn" onclick="loadExample('spam')" style="margin-top: 0.5rem;">Spam Example</button>
+                            <button class="btn" onclick="loadExample('phishing')" style="margin-top: 0.5rem;">Phishing Example</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection" style="display: none;">
+                    <div class="results-card">
+                        <div class="card-header">
+                            <h3 class="card-title">Scan Results</h3>
+                            <div class="result-actions">
+                                <button class="btn" onclick="copyResults()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 15H4A2 2 0 0 1 2 13V4A2 2 0 0 1 4 2H13A2 2 0 0 1 15 4V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Copy
+                                </button>
+                                <button class="btn" onclick="exportResults()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M21 15V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <polyline points="7,10 12,15 17,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="resultsContent">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Tab -->
+        <div id="history" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Scan History</h2>
+                    <button class="btn" onclick="exportHistory()">Export History</button>
+                </div>
+                
+                <div class="history-controls">
+                    <input type="text" class="search-input" id="historySearch" placeholder="Search history...">
+                    <select class="filter-select" id="historyFilter">
+                        <option value="all">All Results</option>
+                        <option value="legitimate">Legitimate</option>
+                        <option value="spam">Spam</option>
+                        <option value="phishing">Phishing</option>
+                    </select>
+                    <button class="btn" onclick="clearHistory()">Clear All</button>
+                </div>
+                
+                <div id="historyList" class="history-list">
+                    <!-- History items will be populated here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Tab -->
+        <div id="settings" class="tab-content">
+            <div class="settings-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">API Configuration</h2>
+                        <button class="btn test-connection" onclick="testConnection()">Test Connection</button>
+                    </div>
+                    
+                    <form id="settingsForm">
+                        <div class="form-group">
+                            <label class="form-label" for="apiUrl">API URL</label>
+                            <input type="url" class="form-input" id="apiUrl" placeholder="http://localhost:5000" required>
+                            <div class="form-help">Enter the base URL of your Email Guardian API</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="apiKey">API Key</label>
+                            <input type="password" class="form-input" id="apiKey" placeholder="Enter your API key">
+                            <div class="form-help">Optional: API key for authentication (stored locally)</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">System Status</h2>
+                    </div>
+                    
+                    <div class="system-status">
+                        <div class="status-grid">
+                            <div class="status-item">
+                                <span>API Connection</span>
+                                <span id="apiConnectionStatus" class="status-indicator offline">
+                                    <span class="status-dot"></span>
+                                    Offline
+                                </span>
+                            </div>
+                            <div class="status-item">
+                                <span>Model Status</span>
+                                <span id="modelStatus" class="status-indicator offline">
+                                    <span class="status-dot"></span>
+                                    Unknown
+                                </span>
+                            </div>
+                            <div class="status-item">
+                                <span>LLM Service</span>
+                                <span id="llmStatus" class="status-indicator offline">
+                                    <span class="status-dot"></span>
+                                    Unknown
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="systemStats"></div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">About</h2>
+                    </div>
+                    
+                    <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+                        Email Guardian is an advanced email security scanner that uses machine learning 
+                        and AI to detect spam, phishing, and other malicious emails.
+                    </p>
+                    
+                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                        <strong>Version:</strong> 1.0.0<br>
+                        <strong>Build:</strong> Static Frontend<br>
+                        <strong>License:</strong> MIT
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- CDN Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+
+    <script>
+        // Application State
+        const AppState = {
+            currentTab: 'scanner',
+            apiUrl: localStorage.getItem('apiUrl') || 'http://localhost:5000',
+            apiKey: localStorage.getItem('apiKey') || '',
+            theme: localStorage.getItem('theme') || 'light',
+            history: JSON.parse(localStorage.getItem('scanHistory') || '[]'),
+            isScanning: false,
+            lastResults: null
+        };
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            // Set theme
+            document.documentElement.setAttribute('data-theme', AppState.theme);
+            
+            // Load settings
+            document.getElementById('apiUrl').value = AppState.apiUrl;
+            document.getElementById('apiKey').value = AppState.apiKey;
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Check API status
+            checkApiStatus();
+            
+            // Load history
+            loadHistory();
+            
+            // Show welcome toast
+            showToast('Welcome to Email Guardian!', 'info');
+        }
+
+        function setupEventListeners() {
+            // Tab navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    switchTab(e.target.dataset.tab);
+                });
+            });
+            
+            // Theme toggle
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            
+            // Email input
+            const emailInput = document.getElementById('emailInput');
+            emailInput.addEventListener('input', updateCharCount);
+            emailInput.addEventListener('dragover', handleDragOver);
+            emailInput.addEventListener('dragleave', handleDragLeave);
+            emailInput.addEventListener('drop', handleFileDrop);
+            
+            // File upload
+            document.getElementById('fileUpload').addEventListener('click', () => {
+                document.getElementById('fileInput').click();
+            });
+            
+            document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+            
+            // Scan button
+            document.getElementById('scanButton').addEventListener('click', scanEmail);
+            
+            // Settings form
+            document.getElementById('settingsForm').addEventListener('submit', saveSettings);
+            
+            // History search and filter
+            document.getElementById('historySearch').addEventListener('input', filterHistory);
+            document.getElementById('historyFilter').addEventListener('change', filterHistory);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    if (AppState.currentTab === 'scanner') {
+                        scanEmail();
+                    }
+                }
+            });
+        }
+
+        // Tab Management
+        function switchTab(tabName) {
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            
+            AppState.currentTab = tabName;
+            
+            // Load tab-specific data
+            if (tabName === 'history') {
+                loadHistory();
+            } else if (tabName === 'settings') {
+                checkApiStatus();
+            }
+        }
+
+        // Theme Management
+        function toggleTheme() {
+            AppState.theme = AppState.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', AppState.theme);
+            localStorage.setItem('theme', AppState.theme);
+            
+            const icon = document.querySelector('#themeToggle svg path');
+            if (AppState.theme === 'dark') {
+                icon.setAttribute('d', 'M12 3V1M12 23V21M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22');
+            } else {
+                icon.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
+            }
+        }
+
+        // File Handling
+        function updateCharCount() {
+            const input = document.getElementById('emailInput');
+            const count = input.value.length;
+            document.getElementById('charCount').textContent = count.toLocaleString();
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.target.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.target.classList.remove('drag-over');
+        }
+
+        function handleFileDrop(e) {
+            e.preventDefault();
+            e.target.classList.remove('drag-over');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                loadFile(files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            if (e.target.files.length > 0) {
+                loadFile(e.target.files[0]);
+            }
+        }
+
+        function loadFile(file) {
+            if (!file.type.includes('text') && !file.name.endsWith('.eml')) {
+                showToast('Please select a text or .eml file', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('emailInput').value = e.target.result;
+                updateCharCount();
+                showToast(`File "${file.name}" loaded successfully`, 'success');
+            };
+            reader.readAsText(file);
+        }
+
+        // Example Email Loading
+        function loadExample(type) {
+            const examples = {
+                legitimate: `From: notifications@company.com
+To: user@example.com
+Subject: Your Monthly Report is Ready
+
+Hello,
+
+Your monthly analytics report for January 2025 is now available for download.
+
+You can access it by logging into your dashboard at https://company.com/dashboard
+
+Best regards,
+Analytics Team`,
+                
+                spam: `From: winner@lottery-international.com
+To: user@example.com
+Subject: CONGRATULATIONS! YOU'VE WON $1,000,000!!!
+
+DEAR LUCKY WINNER!!!
+
+YOU HAVE WON THE INTERNATIONAL LOTTERY JACKPOT OF ONE MILLION DOLLARS!!!
+
+Send us your bank details IMMEDIATELY to claim your prize:
+- Full Name
+- Bank Account Number
+- Social Security Number
+- Copy of ID
+
+Contact: winner@lottery-international.com
+
+URGENT! CLAIM NOW!`,
+                
+                phishing: `From: security@paypa1.com
+To: user@example.com
+Subject: Urgent: Verify Your Account
+
+Your PayPal account has been temporarily suspended due to suspicious activity.
+
+Click here to verify your account immediately:
+http://paypa1-security.suspicious-domain.com/verify
+
+If you don't verify within 24 hours, your account will be permanently closed.
+
+PayPal Security Team`
+            };
+            
+            document.getElementById('emailInput').value = examples[type];
+            updateCharCount();
+            showToast(`Loaded ${type} email example`, 'info');
+        }
+
+        // Email Scanning
+        async function scanEmail() {
+            const emailContent = document.getElementById('emailInput').value.trim();
+            
+            if (!emailContent) {
+                showToast('Please enter email content to scan', 'warning');
+                return;
+            }
+            
+            if (!AppState.apiUrl) {
+                showToast('Please configure API URL in settings', 'error');
+                switchTab('settings');
+                return;
+            }
+            
+            setLoadingState(true);
+            
+            try {
+                const response = await axios.post(`${AppState.apiUrl}/api/scan`, {
+                    text: emailContent,
+                    llm_validation: document.getElementById('llmValidation').checked
+                }, {
+                    headers: AppState.apiKey ? { 'X-API-Key': AppState.apiKey } : {},
+                    timeout: 30000
+                });
+                
+                displayResults(response.data);
+                saveToHistory(emailContent, response.data);
+                showToast('Email scanned successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Scan error:', error);
+                let errorMessage = 'Failed to scan email';
+                
+                if (error.response) {
+                    errorMessage = error.response.data?.error || `Server error: ${error.response.status}`;
+                } else if (error.request) {
+                    errorMessage = 'Cannot connect to API. Check your settings.';
+                } else {
+                    errorMessage = error.message;
+                }
+                
+                showToast(errorMessage, 'error');
+                
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        function setLoadingState(loading) {
+            AppState.isScanning = loading;
+            const scanButton = document.getElementById('scanButton');
+            const buttonText = scanButton.querySelector('.button-text');
+            
+            if (loading) {
+                scanButton.classList.add('loading');
+                scanButton.disabled = true;
+                buttonText.textContent = 'Scanning...';
+            } else {
+                scanButton.classList.remove('loading');
+                scanButton.disabled = false;
+                buttonText.textContent = 'Scan Email';
+            }
+        }
+
+        function displayResults(results) {
+            AppState.lastResults = results;
+            
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            // Determine classification
+            const classification = results.classification || 'unknown';
+            const confidence = Math.round((results.confidence || 0) * 100);
+            const probabilities = results.probabilities || {};
+            
+            // Get badge class
+            const badgeClass = {
+                'legitimate': 'badge-legitimate',
+                'spam': 'badge-spam',
+                'phishing': 'badge-phishing'
+            }[classification] || 'badge-legitimate';
+            
+            resultsContent.innerHTML = `
+                <div class="classification-badge ${badgeClass}">
+                    ${classification.toUpperCase()}
+                </div>
+                
+                <div class="confidence-display">
+                    <div class="confidence-label">Confidence: ${confidence}%</div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${confidence}%"></div>
+                    </div>
+                </div>
+                
+                <div class="probability-breakdown">
+                    <div class="probability-item">
+                        <div class="probability-label">Legitimate</div>
+                        <div class="probability-value" style="color: var(--success);">
+                            ${Math.round((probabilities.legitimate || 0) * 100)}%
+                        </div>
+                    </div>
+                    <div class="probability-item">
+                        <div class="probability-label">Spam</div>
+                        <div class="probability-value" style="color: var(--warning);">
+                            ${Math.round((probabilities.spam || 0) * 100)}%
+                        </div>
+                    </div>
+                    <div class="probability-item">
+                        <div class="probability-label">Phishing</div>
+                        <div class="probability-value" style="color: var(--danger);">
+                            ${Math.round((probabilities.phishing || 0) * 100)}%
+                        </div>
+                    </div>
+                </div>
+                
+                ${results.explanation ? `
+                    <div class="explanation">
+                        <strong>AI Analysis:</strong><br>
+                        ${escapeHtml(results.explanation)}
+                    </div>
+                ` : ''}
+                
+                ${results.llm_validation ? `
+                    <div class="explanation">
+                        <strong>LLM Validation:</strong><br>
+                        ${formatLlmValidation(results.llm_validation)}
+                    </div>
+                ` : ''}
+            `;
+            
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // LLM Validation Formatting
+function formatLlmValidation(llmValidation) {
+    if (!llmValidation || typeof llmValidation !== 'object') {
+        return 'No LLM validation data available';
+    }
+    
+    if (!llmValidation.enabled) {
+        const reason = llmValidation.reason || llmValidation.error || 'LLM validation disabled';
+        return `Status: Disabled (${escapeHtml(reason)})`;
+    }
+    
+    let output = `Status: Enabled<br>`;
+    
+    if (llmValidation.llm_classification) {
+        output += `LLM Classification: <strong>${llmValidation.llm_classification.toUpperCase()}</strong><br>`;
+    }
+    
+    if (llmValidation.llm_confidence) {
+        output += `LLM Confidence: <strong>${Math.round(llmValidation.llm_confidence * 100)}%</strong><br>`;
+    }
+    
+    if (llmValidation.agreement !== undefined) {
+        const agreementText = llmValidation.agreement ? 'Yes ✅' : 'No ❌';
+        output += `Models Agree: <strong>${agreementText}</strong><br>`;
+    }
+    
+    if (llmValidation.llm_reasoning) {
+        output += `<br><em>LLM Reasoning:</em><br>${escapeHtml(llmValidation.llm_reasoning)}<br>`;
+    }
+    
+    if (llmValidation.recommendation) {
+        output += `<br><em>Recommendation:</em><br>${escapeHtml(llmValidation.recommendation)}`;
+    }
+    
+    return output;
+}
+
+function formatLlmValidationText(llmValidation) {
+    if (!llmValidation || typeof llmValidation !== 'object') {
+        return 'No LLM validation data available';
+    }
+    
+    if (!llmValidation.enabled) {
+        return `Disabled (${llmValidation.reason || llmValidation.error || 'Unknown reason'})`;
+    }
+    
+    let output = `Enabled\n`;
+    if (llmValidation.llm_classification) {
+        output += `Classification: ${llmValidation.llm_classification}\n`;
+    }
+    if (llmValidation.llm_confidence) {
+        output += `Confidence: ${Math.round(llmValidation.llm_confidence * 100)}%\n`;
+    }
+    if (llmValidation.agreement !== undefined) {
+        output += `Models Agree: ${llmValidation.agreement ? 'Yes' : 'No'}\n`;
+    }
+    if (llmValidation.llm_reasoning) {
+        output += `Reasoning: ${llmValidation.llm_reasoning}\n`;
+    }
+    
+    return output;
+}
+
+        // History Management
+        function saveToHistory(emailContent, results) {
+            const historyItem = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                email: emailContent.substring(0, 500), // Store first 500 chars
+                results: results,
+                classification: results.classification,
+                confidence: results.confidence
+            };
+            
+            AppState.history.unshift(historyItem);
+            
+            // Keep only last 50 items
+            if (AppState.history.length > 50) {
+                AppState.history = AppState.history.slice(0, 50);
+            }
+            
+            localStorage.setItem('scanHistory', JSON.stringify(AppState.history));
+        }
+
+        function loadHistory() {
+            const historyList = document.getElementById('historyList');
+            
+            if (AppState.history.length === 0) {
+                historyList.innerHTML = `
+                    <div class="text-center p-4" style="color: var(--text-secondary);">
+                        No scan history available. Start by scanning some emails!
+                    </div>
+                `;
+                return;
+            }
+            
+            const filteredHistory = getFilteredHistory();
+            
+            historyList.innerHTML = filteredHistory.map(item => `
+                <div class="history-item" onclick="toggleHistoryDetails(${item.id})">
+                    <div class="history-header">
+                        <div class="classification-badge ${getBadgeClass(item.classification)}">
+                            ${item.classification.toUpperCase()}
+                        </div>
+                        <div class="history-date">
+                            ${formatDate(item.timestamp)}
+                        </div>
+                    </div>
+                    
+                    <div class="history-preview">
+                        ${escapeHtml(item.email.substring(0, 100))}${item.email.length > 100 ? '...' : ''}
+                    </div>
+                    
+                    <div class="history-details" id="details-${item.id}">
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Confidence:</strong> ${Math.round(item.confidence * 100)}%
+                        </div>
+                        
+                        ${item.results.explanation ? `
+                            <div style="margin-bottom: 1rem;">
+                                <strong>Analysis:</strong><br>
+                                ${escapeHtml(item.results.explanation)}
+                            </div>
+                        ` : ''}
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <strong>Full Email:</strong><br>
+                            <pre style="white-space: pre-wrap; font-family: inherit; font-size: 0.875rem; background: var(--bg-secondary); padding: 1rem; border-radius: 0.5rem; overflow-x: auto;">${escapeHtml(item.email)}</pre>
+                        </div>
+                        
+                        <button class="btn" onclick="event.stopPropagation(); deleteHistoryItem(${item.id})">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getFilteredHistory() {
+            const searchTerm = document.getElementById('historySearch').value.toLowerCase();
+            const filter = document.getElementById('historyFilter').value;
+            
+            return AppState.history.filter(item => {
+                const matchesSearch = !searchTerm || 
+                    item.email.toLowerCase().includes(searchTerm) ||
+                    (item.results.explanation && item.results.explanation.toLowerCase().includes(searchTerm));
+                
+                const matchesFilter = filter === 'all' || item.classification === filter;
+                
+                return matchesSearch && matchesFilter;
+            });
+        }
+
+        function filterHistory() {
+            loadHistory();
+        }
+
+        function toggleHistoryDetails(id) {
+            const item = document.querySelector(`#details-${id}`);
+            const parent = item.closest('.history-item');
+            
+            if (parent.classList.contains('expanded')) {
+                parent.classList.remove('expanded');
+            } else {
+                // Close all other expanded items
+                document.querySelectorAll('.history-item.expanded').forEach(el => {
+                    el.classList.remove('expanded');
+                });
+                parent.classList.add('expanded');
+            }
+        }
+
+        function deleteHistoryItem(id) {
+            AppState.history = AppState.history.filter(item => item.id !== id);
+            localStorage.setItem('scanHistory', JSON.stringify(AppState.history));
+            loadHistory();
+            showToast('History item deleted', 'info');
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all scan history?')) {
+                AppState.history = [];
+                localStorage.setItem('scanHistory', JSON.stringify(AppState.history));
+                loadHistory();
+                showToast('History cleared', 'info');
+            }
+        }
+
+        function exportHistory() {
+            if (AppState.history.length === 0) {
+                showToast('No history to export', 'warning');
+                return;
+            }
+            
+            const exportData = {
+                export_date: new Date().toISOString(),
+                total_scans: AppState.history.length,
+                history: AppState.history
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `email-guardian-history-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('History exported successfully', 'success');
+        }
+
+        // Settings Management
+        function saveSettings(e) {
+            e.preventDefault();
+            
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            const apiKey = document.getElementById('apiKey').value.trim();
+            
+            if (!apiUrl) {
+                showToast('API URL is required', 'error');
+                return;
+            }
+            
+            AppState.apiUrl = apiUrl;
+            AppState.apiKey = apiKey;
+            
+            localStorage.setItem('apiUrl', apiUrl);
+            localStorage.setItem('apiKey', apiKey);
+            
+            showToast('Settings saved successfully', 'success');
+            checkApiStatus();
+        }
+
+        async function testConnection() {
+            if (!AppState.apiUrl) {
+                showToast('Please enter API URL first', 'warning');
+                return;
+            }
+            
+            try {
+                const response = await axios.get(`${AppState.apiUrl}/health`, {
+                    headers: AppState.apiKey ? { 'X-API-Key': AppState.apiKey } : {},
+                    timeout: 10000
+                });
+                
+                showToast('Connection successful!', 'success');
+                updateSystemStatus(response.data);
+                
+            } catch (error) {
+                console.error('Connection test failed:', error);
+                showToast('Connection failed. Check your API URL and key.', 'error');
+                updateSystemStatus(null);
+            }
+        }
+
+async function checkApiStatus() {
+    if (!AppState.apiUrl) return;
+    
+    try {
+        const response = await axios.get(`${AppState.apiUrl}/health`, {
+            headers: AppState.apiKey ? { 'X-API-Key': AppState.apiKey } : {},
+            timeout: 5000
+        });
+        
+        updateApiStatus(true);
+        updateSystemStatus(response.data);
+        
+    } catch (error) {
+        console.log('API Status Check Error:', error);
+        updateApiStatus(false);
+        updateSystemStatus(null);
+    }
+}
+
+        function updateApiStatus(online) {
+            const statusElement = document.getElementById('apiStatus');
+            const connectionStatus = document.getElementById('apiConnectionStatus');
+            
+            if (online) {
+                statusElement.className = 'status-indicator online';
+                statusElement.innerHTML = '<span class="status-dot"></span><span class="status-text">Online</span>';
+                
+                if (connectionStatus) {
+                    connectionStatus.className = 'status-indicator online';
+                    connectionStatus.innerHTML = '<span class="status-dot"></span>Online';
+                }
+            } else {
+                statusElement.className = 'status-indicator offline';
+                statusElement.innerHTML = '<span class="status-dot"></span><span class="status-text">Offline</span>';
+                
+                if (connectionStatus) {
+                    connectionStatus.className = 'status-indicator offline';
+                    connectionStatus.innerHTML = '<span class="status-dot"></span>Offline';
+                }
+            }
+        }
+
+function updateSystemStatus(healthData) {
+    const modelStatus = document.getElementById('modelStatus');
+    const llmStatus = document.getElementById('llmStatus');
+    const systemStats = document.getElementById('systemStats');
+    
+    if (healthData) {
+        console.log('Health Data:', healthData); // Debug log
+        
+        // Update model status
+        if (modelStatus) {
+            const isModelOnline = healthData.model_loaded === true;
+            modelStatus.className = `status-indicator ${isModelOnline ? 'online' : 'offline'}`;
+            modelStatus.innerHTML = `<span class="status-dot"></span>${isModelOnline ? 'Online' : 'Offline'}`;
+        }
+        
+        // Update LLM status - check multiple possible fields
+        if (llmStatus) {
+            const isLlmOnline = healthData.groq_validator === true || 
+                               healthData.groq_available === true || 
+                               healthData.groq_integration === 'Enabled';
+            llmStatus.className = `status-indicator ${isLlmOnline ? 'online' : 'offline'}`;
+            llmStatus.innerHTML = `<span class="status-dot"></span>${isLlmOnline ? 'Online' : 'Offline'}`;
+            
+            // Show which LLM model if available
+            if (isLlmOnline && healthData.groq_model && healthData.groq_model !== 'N/A') {
+                llmStatus.title = `Model: ${healthData.groq_model}`;
+            }
+        }
+        
+        // Update stats if available
+        if (systemStats) {
+            systemStats.innerHTML = `
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 0.5rem;">System Information</h4>
+                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                        API Version: ${healthData.api_version || 'Unknown'}<br>
+                        Model Handler: ${healthData.model_handler_available ? 'Available' : 'Unavailable'}<br>
+                        Database: ${healthData.database_available ? 'Available' : 'Unavailable'}<br>
+                        ${healthData.groq_model ? `Groq Model: ${healthData.groq_model}<br>` : ''}
+                        Last Check: ${new Date().toLocaleTimeString()}
+                    </div>
+                </div>
+            `;
+        }
+    } else {
+        // Offline state
+        if (modelStatus) {
+            modelStatus.className = 'status-indicator offline';
+            modelStatus.innerHTML = '<span class="status-dot"></span>Unknown';
+        }
+        
+        if (llmStatus) {
+            llmStatus.className = 'status-indicator offline';
+            llmStatus.innerHTML = '<span class="status-dot"></span>Unknown';
+        }
+        
+        if (systemStats) {
+            systemStats.innerHTML = `
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                        Unable to connect to API
+                    </div>
+                </div>
+            `;
+        }
+    }
+}
+
+        // Result Actions
+        function copyResults() {
+            if (!AppState.lastResults) {
+                showToast('No results to copy', 'warning');
+                return;
+            }
+            
+            const results = AppState.lastResults;
+            const text = `
+Email Guardian Scan Results
+==========================
+Classification: ${results.classification.toUpperCase()}
+Confidence: ${Math.round(results.confidence * 100)}%
+
+Probabilities:
+- Legitimate: ${Math.round((results.probabilities?.legitimate || 0) * 100)}%
+- Spam: ${Math.round((results.probabilities?.spam || 0) * 100)}%
+- Phishing: ${Math.round((results.probabilities?.phishing || 0) * 100)}%
+
+${results.explanation ? `Analysis: ${results.explanation}` : ''}
+${results.llm_validation ? `LLM Validation: ${formatLlmValidationText(results.llm_validation)}` : ''}
+
+Scanned on: ${new Date().toLocaleString()}
+            `.trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Results copied to clipboard', 'success');
+            }).catch(() => {
+                showToast('Failed to copy results', 'error');
+            });
+        }
+
+        function exportResults() {
+            if (!AppState.lastResults) {
+                showToast('No results to export', 'warning');
+                return;
+            }
+            
+            const exportData = {
+                timestamp: new Date().toISOString(),
+                text: document.getElementById('emailInput').value,
+                results: AppState.lastResults
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `email-scan-result-${Date.now()}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('Results exported successfully', 'success');
+        }
+
+        // Toast Notifications
+        function showToast(message, type = 'info', duration = 5000) {
+            const toastContainer = document.getElementById('toastContainer');
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${escapeHtml(message)}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, duration);
+        }
+
+        // Utility Functions
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(isoString) {
+            return new Date(isoString).toLocaleString();
+        }
+
+        function getBadgeClass(classification) {
+            return {
+                'legitimate': 'badge-legitimate',
+                'spam': 'badge-spam',
+                'phishing': 'badge-phishing'
+            }[classification] || 'badge-legitimate';
+        }
+
+        // Auto-check API status periodically
+        setInterval(checkApiStatus, 60000); // Check every minute
+    </script>
+</body>
+</html>

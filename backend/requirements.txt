@@ -1,0 +1,23 @@
+# Email Guardian Backend Dependencies
+
+# Core Flask dependencies
+Flask==2.3.3
+Flask-CORS==4.0.0
+Flask-Limiter==3.5.0
+
+# Machine Learning dependencies
+torch==2.0.1
+transformers==4.33.2
+numpy==1.24.3
+
+# LLM Integration
+groq==0.12.0
+
+# Utility dependencies
+python-dotenv==1.0.0
+gunicorn==21.2.0
+requests==2.31.0
+
+# Development dependencies (optional)
+pytest==7.4.2
+pytest-flask==1.2.0
