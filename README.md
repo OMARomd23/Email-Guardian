@@ -54,11 +54,6 @@ python app.py
    GROQ_API_KEY=your-groq-key-here  # Optional
    ```
 
-3. **Test the setup:**
-   ```bash
-   python scripts/setup_email_guardian.py --test-only
-   ```
-
 ## API Endpoints
 
 - `GET /health` - System health check
@@ -66,28 +61,8 @@ python app.py
 - `GET /api/history` - Get scan history
 - `GET /api/stats` - Get classification statistics
 
-## Security
-
-- Never commit `.env` files to version control
-- Generate secure API keys for production
-- Use HTTPS in production environments
-- Regularly rotate API keys
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
+You can freely use, modify, distribute, and sublicense the software.
 
-## Support
-
-If you encounter issues:
-1. Check the [troubleshooting guide](docs/troubleshooting.md)
-2. Review [API documentation](docs/api.md)
-3. Open an issue on GitHub
