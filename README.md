@@ -8,18 +8,23 @@ Advanced AI-powered email security scanner that detects spam and phishing attemp
 - 🧠 **LLM Validation**: Optional Groq LLM for enhanced accuracy  
 - 🌐 **Web Interface**: Simple HTML frontend
 - 💻 **CLI Tool**: Command-line interface for batch processing
-- 📊 **Analytics**: Comprehensive scan history and statistics
+- 📊 **History**: Comprehensive scan history
 - 🔒 **Secure**: API key authentication and input validation
 
 ## Quick Start
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/email-guardian.git
+git clone https://github.com/OMARomd23/Email-Guardian.git
 cd email-guardian
 ```
+### 2. Download the model
+```bash
+pip install gdown
+gdown 1u3oESbMvc-XD9iqwm0LN8JrteS6JbtuU
+```
 
-### 2. Set up the backend
+### 3. Set up the backend
 ```bash
 cd backend
 pip install -r requirements.txt
@@ -27,12 +32,12 @@ cp .env.example .env
 # Edit .env with your configuration
 ```
 
-### 3. Start the application
+### 4. Start the application
 ```bash
 python app.py
 ```
 
-### 4. Open the frontend
+### 5. Open the frontend
 - Open `frontend/index.html` in your browser
 - Configure API settings in the Settings tab
 
