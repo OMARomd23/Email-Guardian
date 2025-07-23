@@ -69,7 +69,7 @@ Open `frontend/index.html` in your web browser or visit the live demo at:
 
 To use the hosted version:
 
-- **API Key**: `SEG-RICHDALE-2025-APIKEY-48F7A1`
+- **API Key**: `contact_me_for_an_api_key`
 - **Backend URL**: `https://email-guardian-production.up.railway.app`
 
 Enter these credentials in the **Settings** tab of the web interface.
