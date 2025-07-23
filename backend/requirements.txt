@@ -1,14 +1,16 @@
 # Email Guardian Backend Dependencies
 
+# Machine Learning dependencies
+# PyTorch CPU-only wheels
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.1.1+cpu
+transformers==4.33.2
+numpy==1.24.3
+
 # Core Flask dependencies
 Flask==2.3.3
 Flask-CORS==4.0.0
 Flask-Limiter==3.5.0
-
-# Machine Learning dependencies
-torch==2.0.1
-transformers==4.33.2
-numpy==1.24.3
 
 # LLM Integration
 groq==0.30.0
