@@ -1,1 +1,1 @@
-# **<code style="color : name_color">Note</code>**
+# **<code style="color : yellow">Note</code>**
