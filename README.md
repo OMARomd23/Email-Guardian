@@ -120,7 +120,7 @@ The Email Guardian backend exposes the following RESTful API endpoints:
 ```bash
 curl -X POST "https://email-guardian-production.up.railway.app/api/scan" \
   -H "Content-Type: application/json" \
-  -H "X-API-Key: SEG-RICHDALE-2025-APIKEY-48F7A1" \
+  -H "X-API-Key: your_api_key" \
   -d '{"text": "Congratulations! You have won $1,000,000. Click here to claim your prize!"}'
 ```
 
@@ -182,13 +182,13 @@ Email-Guardian/
 │   ├── requirements.txt        # Python dependencies
 │   └── Dockerfile              # Container configuration
 ├── frontend/
-│   ├── index.html              # Web interface
-│   ├── script.js               # Frontend logic
-│   └── style.css               # Styling
+│   └── index.html              # Web interface
 ├── docs/
-│   ├── README.md               # This file
-│   └── security_notes.md       # Security documentation
+│   ├── README.md               # A copy of this file
+│   ├── Email-Guard_distilbert-fine-tuned.ipynb   # Model Training notebook 
+│   └── Data_processing.ipynb   # Data Processing notebook
 ├── requirements.txt            # Root dependencies
+│── README.md                   # This file
 └── reflection.md               # Project reflection
 ```
 
