@@ -1,147 +1,267 @@
 # Email Guardian 🛡️
 
-Advanced AI-powered email security scanner that detects spam and phishing attempts using machine learning and LLM validation.
+**Advanced AI-powered email security scanner that detects spam and phishing attempts using machine learning and LLM validation.**
 
-## Overview
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen)](https://email-guardian-liard.vercel.app/)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-omar669%2Femail--guardian-blue)](https://hub.docker.com/r/omar669/email-guardian)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-This project, **Email Guardian**, is a comprehensive AI-powered toolkit designed to provide robust email security by detecting spam and phishing attempts. It emphasizes leveraging artificial intelligence, practical Python usage, secure cloud backend development, and a user-friendly web interface. The solution integrates a fine-tuned DistilBERT model with  LLM validation for enhanced accuracy, offering a full-stack approach to email security.
+## 🎯 Overview
 
-## Features
+Email Guardian is a comprehensive AI-powered toolkit designed to provide robust email security by detecting spam and phishing attempts. It leverages a fine-tuned DistilBERT model with optional LLM validation for enhanced accuracy, offering a full-stack approach to email security with a user-friendly web interface and secure cloud backend.
 
--   **AI-Powered Detection**: At its core, Email Guardian utilizes a fine-tuned DistilBERT model for highly accurate multi-class email classification, distinguishing between legitimate, spam, and phishing emails.
--   **LLM Validation (Optional)**: For enhanced accuracy and nuanced threat detection, the system incorporates an optional integration with Groq LLM, providing an additional layer of validation.
--   **Web Interface**: A simple yet effective HTML frontend provides an intuitive user interface for submitting email content for scanning and viewing results.
--   **CLI Tool**: A command-line interface (`email_guard.py`) is available for batch processing and direct interaction, allowing users to scan email text and display classifications from the terminal.
--   **RESTful Backend & API**: The application features a robust Flask/FastAPI backend that handles scan requests (`/api/scan`), manages scan history (`/api/history`), and provides classification statistics (`/api/stats`).
--   **Secure**: Security is paramount, with features including API key authentication for controlled access to endpoints, input validation to prevent common web vulnerabilities, and secure deployment practices.
--   **Comprehensive History**: The system maintains a comprehensive scan history, allowing users to review past classifications and track potential threats.
--   **Containerization**: The backend is Dockerized, ensuring consistent and portable deployment across various environments.
+## ✨ Features
 
-## Quick Start
+- **🤖 AI-Powered Detection**: Fine-tuned DistilBERT model for highly accurate multi-class email classification
+- **🔍 LLM Validation**: Optional integration with Groq LLM for enhanced threat detection
+- **🌐 Web Interface**: Intuitive HTML frontend with scan, history, and settings tabs
+- **⚡ CLI Tool**: Command-line interface for batch processing and direct interaction
+- **🔒 Secure API**: RESTful backend with API key authentication and input validation
+- **📊 Comprehensive History**: Track and review past classifications and potential threats
+- **🐳 Containerized**: Dockerized backend for consistent deployment across environments
 
-Follow these steps to get the Email Guardian up and running on your local machine.
+## 🚀 Quick Start
 
-### 1. Clone the repository
+### Prerequisites
 
-Begin by cloning the GitHub repository to your local machine:
+- Python 3.8+
+- Git
+- Docker (optional, for local backend deployment)
 
-```shell
+### 1. Clone the Repository
+
+```bash
 git clone https://github.com/OMARomd23/Email-Guardian.git
-cd email-guardian
+cd Email-Guardian
 ```
 
 ### 2. Download the AI Model
 
-The DistilBERT model used for classification needs to be downloaded separately. Ensure you have `gdown` installed, then use the provided command:
-
-```shell
+```bash
 pip install gdown
 gdown 1u3oESbMvc-XD9iqwm0LN8JrteS6JbtuU
 ```
 
-### 3. Set up the Backend
+### 3. Set Up the Backend
 
-Navigate to the `backend` directory, install the required Python dependencies, and configure your environment variables.
-
-```shell
+```bash
 cd backend
 pip install -r requirements.txt
 cp .env.example .env
-# Edit .env with your configuration (API_KEY, optional GROQ_API_KEY)
+# Edit .env with your configuration
 ```
 
 ### 4. Start the Application
 
-Once the backend is configured, you can start the Flask application:
-
-```shell
+```bash
 python app.py
 ```
 
-The backend API will typically be accessible at `http://localhost:5000`.
+The backend API will be accessible at `http://localhost:5000`.
 
-### 5. Open the Frontend
+### 5. Access the Frontend
 
-Open the `frontend/index.html` file in your web browser. You will need to configure the API settings within the frontend's Settings tab to point to your running backend (e.g., `http://localhost:5000`).
+Open `frontend/index.html` in your web browser or visit the live demo at:
 
-## Configuration
+**🌐 [https://email-guardian-liard.vercel.app/](https://email-guardian-liard.vercel.app/)**
 
-To ensure proper functionality and security, you need to configure API keys for the backend.
+## 🔑 API Configuration
 
-1.  **Generate API Key:**
-    Generate a strong API key using Python:
-    ```shell
-    python -c "import secrets; print(secrets.token_urlsafe(32))"
-    ```
-    
-2.  **Update .env file:**
-    Edit the `.env` file in the `backend` directory with your generated API key and, optionally, your Groq API key if you plan to use the LLM validation feature.
-    ```
-    API_KEY=your-generated-key-here
-    GROQ_API_KEY=your-groq-key-here  # Optional: Only if using LLM validation
-    ```
+To use the hosted version:
 
-## API Endpoints
+- **API Key**: `SEG-RICHDALE-2025-APIKEY-48F7A1`
+- **Backend URL**: `https://email-guardian-production.up.railway.app`
+
+Enter these credentials in the **Settings** tab of the web interface.
+
+## 🛠️ Usage
+
+### Web Interface
+
+1. Visit the web application
+2. Go to **Settings** tab and enter your API key and backend URL
+3. Navigate to **Scan** tab
+4. Enter email content and click "Scan Email"
+5. View results and check **History** tab for past scans
+
+### CLI Tool
+
+```bash
+cd ai
+python email_guard.py --text "Your email content here"
+```
+
+**Example Output:**
+```json
+{
+  "classification": "phishing",
+  "confidence": 0.98,
+  "probabilities": {
+    "spam": 0.01,
+    "phishing": 0.98,
+    "legitimate": 0.01
+  }
+}
+```
+
+## 📡 API Endpoints
 
 The Email Guardian backend exposes the following RESTful API endpoints:
 
--   `GET /health`: A simple endpoint to check the system's health and availability.
--   `POST /api/scan`: Used to classify email content. Requires an API key for authentication.
--   `GET /api/history`: Retrieves the history of scanned emails. Requires an API key.
+| Endpoint | Method | Description | Auth Required |
+|----------|--------|-------------|---------------|
+| `/health` | GET | System health check | No |
+| `/api/scan` | POST | Classify email content | Yes |
+| `/api/history` | GET | Retrieve scan history | Yes |
+| `/api/stats` | GET | Get classification statistics | Yes |
 
-## Deployment
+### Example API Request
 
-This project is designed for easy deployment on free-tier cloud platforms, demonstrating a practical approach to hosting full-stack applications.
+```bash
+curl -X POST "https://email-guardian-production.up.railway.app/api/scan" \
+  -H "Content-Type: application/json" \
+  -H "X-API-Key: SEG-RICHDALE-2025-APIKEY-48F7A1" \
+  -d '{"text": "Congratulations! You have won $1,000,000. Click here to claim your prize!"}'
+```
 
--   **Frontend:** The web frontend was be deployed on [Vercel](https://vercel.com). Live example is available at [https://email-guardian-liard.vercel.app/](https://email-guardian-liard.vercel.app/).
--   **Backend:** The Flask/FastAPI backend, being Dockerized, can was deployed on the container-friendly platform [Railway](https://railway.app). The Docker image is hosted on Docker Hub (e.g., `omar669/email-guardian`).
+## 🤖 AI Model Details
 
-## Security Considerations
+### Model Architecture
+- **Base Model**: DistilBERT (lightweight transformer from HuggingFace)
+- **Task**: 3-class classification (spam, phishing, legitimate)
+- **Output**: Class probabilities with confidence scores
 
-Security is a core aspect of the Email Guardian. Key measures include:
+### Training Configuration
+```python
+TrainingArguments(
+    output_dir="./results",
+    eval_strategy="epoch",
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=16,
+    num_train_epochs=5,
+    weight_decay=0.01,
+    gradient_accumulation_steps=2,
+    fp16=True
+)
+```
 
--   **API Key Authentication:** All critical API endpoints (`/api/scan`, `/api/history`) are protected by API key authentication, ensuring only authorized access.
--   **HTTPS Hosting:** Both frontend and backend components are intended to be hosted over HTTPS to encrypt data in transit and protect against eavesdropping.
--   **Input Validation & Sanitization:** Input validation and sanitization are implemented on both the frontend and backend to prevent common web vulnerabilities like Cross-Site Scripting (XSS) and HTML injection.
--   **Environment Variables:** Sensitive information, such as API keys, is managed through environment variables, preventing their exposure in the codebase.
+### Performance Metrics
+- **Final Accuracy**: 98.25%
+- **Precision**: 98.26%
+- **Recall**: 98.26%
+- **F1-Score**: 98.26%
 
-## AI Model Details
+## 📊 Dataset Information
 
--   **Primary Model:** DistilBERT, a lightweight yet powerful transformer model from HuggingFace, forms the backbone of the email classification system.
--   **Classification Task:** The model is fine-tuned for a 3-class classification problem: `spam`, `phishing`, and `legitimate`.
--   **Output:** The model provides class probabilities, with the highest probability determining the final classification. This also provides a confidence score for each prediction.
--   **Training:** The model was trained over 5 epochs with CPU-safe settings. Specific hyperparameters and the detailed training process can be found in `Email-Guard_distilbert-fine-tuned.ipynb`.
--   **Performance:** At epoch 5, the model achieved an accuracy of 98.25% and similar Precision/Recall/F1 scores. It's noted that slight overfitting was observed, leading to some high-confidence outputs.
+The model was trained on a carefully curated and balanced dataset:
 
-## Dataset Strategy
+| Class | Samples |
+|-------|---------|
+| Legitimate | 92,690 |
+| Spam | 40,396 |
+| Phishing | 40,014 |
 
-The effectiveness of the AI model relies on a carefully curated and balanced dataset. Multiple heterogeneous datasets were merged to achieve this:
+**Data Sources:**
+- Enron Spam Dataset
+- CEAS Spam Dataset
+- SpamAssassin Dataset
+- ealvaradob/phishing-dataset (HuggingFace)
+- Phishing dataset from Kaggle
 
--   **Legitimate Emails:** Approximately 92,690 samples.
--   **Spam Emails:** Approximately 40,396 samples.
--   **Phishing Emails:** Approximately 40,014 samples.
+## 🏗️ Project Structure
 
-**Preprocessing steps** included unifying label formats, removing datasets that could introduce bias (e.g., overly preprocessed phishing sets), cleaning features to retain only text and label columns, and finally, merging and shuffling the combined dataset. Detailed steps are documented in `docs/Data_processing.ipynb`.
+```
+Email-Guardian/
+├── ai/
+│   └── email_guard.py          # CLI tool
+├── backend/
+│   ├── app.py                  # Flask application
+│   ├── model_handler.py        # AI model wrapper
+│   ├── database.py             # Database management
+│   ├── groq_validator.py       # LLM validation
+│   ├── requirements.txt        # Python dependencies
+│   └── Dockerfile              # Container configuration
+├── frontend/
+│   ├── index.html              # Web interface
+│   ├── script.js               # Frontend logic
+│   └── style.css               # Styling
+├── docs/
+│   ├── README.md               # This file
+│   └── security_notes.md       # Security documentation
+├── requirements.txt            # Root dependencies
+└── reflection.md               # Project reflection
+```
 
-## Challenges Faced
+## 🚀 Deployment
 
-During the development of Email Guardian, several challenges were encountered:
+### Frontend (Vercel)
+The web frontend is deployed on Vercel for global accessibility and optimal performance.
 
--   **Model Training & Data Bias:** Initial datasets led to misclassification of short tokens as phishing, necessitating extensive testing and re-curation of the dataset to mitigate bias.
--   **Overfitting:** The model exhibited high confidence outputs, indicating slight overfitting, likely due to the limited number of training epochs. This suggests a need for further regularization or more extensive validation.
--   **Limited 3-Class Models:** The scarcity of pre-trained models specifically for 3-class email classification required manual fine-tuning, adding complexity to the AI development phase.
--   **Multi-Platform Integration:** Managing and ensuring seamless integration across different cloud platforms (Vercel, Railway, Docker Hub) for frontend, backend, and container registry proved to be a significant coordination effort.
+### Backend (Railway + Docker)
+The backend runs as a Docker container on Railway, with the image hosted on Docker Hub.
 
-## Future Improvements
+**Docker Image**: `omar669/email-guardian`
 
-Potential enhancements for the Email Guardian include:
+### Local Deployment with Docker
 
--   **Dataset Quality:** Utilizing higher-quality datasets, ideally with full raw email content, to provide richer contextual information for the model.
--   **Overfitting Mitigation:** Implementing strategies such as more epochs with early stopping, better validation sets, or data augmentation to reduce overfitting and improve generalization.
--   **Feature Expansion:** Adding advanced features like scan history visualization, detailed email header analysis, and real-time scan feedback.
--   **Integration:** Exploring extensions such as a browser plugin or direct Gmail integration for more seamless user experience.
+```bash
+# Build the image
+docker build -t email-guardian ./backend
 
-## License
+# Run the container
+docker run -p 5000:5000 -e API_KEY=your-api-key email-guardian
+```
 
-This project is released under the MIT License. See the [LICENSE](LICENSE) file in the repository for full details. You are free to use, modify, distribute, and sublicense the software.
+## 🔒 Security Features
 
+- **API Key Authentication**: All critical endpoints require valid API keys
+- **Input Validation**: Comprehensive validation and sanitization of user inputs
+- **HTTPS Deployment**: Both frontend and backend use secure HTTPS connections
+- **Rate Limiting**: Protection against abuse with configurable rate limits
+- **Environment Variables**: Sensitive configuration managed through environment variables
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+cd backend
+python -m pytest tests/ -v
+```
+
+## 📈 Performance Monitoring
+
+The application includes:
+- Health check endpoints for monitoring
+- Comprehensive logging for debugging
+- Classification statistics tracking
+- Scan history with metadata
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- HuggingFace for the DistilBERT model and datasets
+- Railway and Vercel for hosting platforms
+- The open-source community for various datasets used in training
+
+## 📞 Contact
+
+**OUMESSAOUD Omar**
+- Email: oumessaoud-omar@proton.me
+- LinkedIn: [Profile](https://linkedin.com/in/your-profile)
+- GitHub: [@OMARomd23](https://github.com/OMARomd23)
+
+---
+
+*Built with ❤️ for enhanced email security*
