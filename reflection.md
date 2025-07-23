@@ -2,7 +2,7 @@
 
 ## 🧠 What I Learned
 
-Working on the Smart Email Guardian project provided invaluable hands-on experience in combining AI, web development, and cloud deployment into a unified, security-conscious application. This project challenged me to integrate multiple technologies and platforms while maintaining focus on practical security applications.
+Working on the Smart Email Guardian project provided invaluable hands-on experience in combining AI, web development, and cloud deployment into a unified application. This project challenged me to integrate multiple technologies and platforms.
 
 ### Key Technical Skills Acquired:
 
