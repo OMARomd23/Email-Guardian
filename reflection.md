@@ -109,10 +109,9 @@ The goal was to create a dataset that represents real-world email patterns while
 - `GET /health`: System health and status check
 - `POST /api/scan`: Email classification endpoint
 - `GET /api/history`: Scan history retrieval
-- `GET /api/stats`: Classification statistics
 
 ### CLI Tool
-A command-line interface (`email_guard.py`) provides direct access to the classification functionality for power users and batch processing scenarios.
+A command-line interface (`email_guard.py`) provides direct access to the classification functionality for terminal users and batch processing scenarios.
 
 ## 🔐 Security Implementation
 
@@ -126,7 +125,6 @@ Security was a primary concern throughout development:
 ### Deployment Security
 - **HTTPS Enforcement**: Both frontend and backend use secure HTTPS connections
 - **Environment Variables**: Sensitive configuration managed securely
-- **Container Security**: Minimal Docker images with security best practices
 
 ### Input Security
 - **XSS Prevention**: HTML/JavaScript injection protection
