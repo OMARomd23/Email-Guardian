@@ -144,9 +144,9 @@ Security was a primary concern throughout development:
 **Solution**: Conducted extensive dataset analysis and testing, removed problematic datasets, and sourced higher-quality alternatives from HuggingFace and other reliable sources.
 
 ### 3. Overfitting Concerns
-**Challenge**: The model showed signs of overfitting with occasionally unrealistic confidence scores (sometimes 100%), likely due to limited training epochs.
+**Challenge**: The model showed signs of overfitting with occasionally unrealistic confidence scores, likely due to number of training epochs.
 
-**Solution**: Documented the issue and implemented monitoring. Future improvements would include early stopping, better validation strategies, and data augmentation.
+**Solution**: Documented the issue. Future improvements would include early stopping, better validation strategies, and data augmentation.
 
 ### 4. Multi-Platform Integration
 **Challenge**: Coordinating deployment across multiple platforms (Vercel for frontend, Railway for backend, Docker Hub for containerization) required careful configuration management.
