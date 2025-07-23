@@ -210,7 +210,6 @@ This project significantly enhanced my understanding of:
 - **Full-Stack Development**: Integrating multiple technologies into cohesive applications
 - **Cloud Architecture**: Leveraging multiple platforms for optimal deployment strategies
 - **Security Practices**: Implementing real-world security measures in web applications
-- **DevOps Workflows**: Containerization, CI/CD concepts, and deployment automation
 
 The experience of building Email Guardian from concept to production-ready application provided invaluable insights into the complexities of modern software development, particularly in AI-enhanced security applications.
 
