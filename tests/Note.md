@@ -1,1 +1,1 @@
-<code style="color : darkorange">Note</code>
+<p style="color : darkorange">Note</p>
