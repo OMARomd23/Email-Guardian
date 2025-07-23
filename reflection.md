@@ -27,7 +27,7 @@ The model performs **3-class classification**:
 - **Phishing**: Malicious emails designed to steal information
 - **Legitimate**: Normal, safe emails
 
-The model outputs class probabilities for each category, and I select the class with the highest probability as the final classification. While I initially wasn't familiar with confidence scoring, I realized that the maximum probability essentially serves as a confidence measure for the prediction.
+The model outputs class probabilities for each category, and I select the class with the highest probability as the final classification.
 
 ### Training Configuration
 ```python
