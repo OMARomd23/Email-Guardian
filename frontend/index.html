@@ -25,7 +25,7 @@
             --gray-700: #374151;
             --gray-800: #1f2937;
             --gray-900: #111827;
-            
+             
             /* Theme variables */
             --bg-primary: var(--light);
             --bg-secondary: var(--gray-100);
@@ -1305,52 +1305,55 @@ Customer Support`,
             }[classification] || 'badge-legitimate';
             
             resultsContent.innerHTML = `
-                <div class="classification-badge ${badgeClass}">
-                    ${classification.toUpperCase()}
-                </div>
-                
-                <div class="confidence-display">
-                    <div class="confidence-label">Confidence: ${confidence}%</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: ${confidence}%"></div>
-                    </div>
-                </div>
-                
-                <div class="probability-breakdown">
-                    <div class="probability-item">
-                        <div class="probability-label">Legitimate</div>
-                        <div class="probability-value" style="color: var(--success);">
-                            ${Math.round((probabilities.legitimate || 0) * 100)}%
-                        </div>
-                    </div>
-                    <div class="probability-item">
-                        <div class="probability-label">Spam</div>
-                        <div class="probability-value" style="color: var(--warning);">
-                            ${Math.round((probabilities.spam || 0) * 100)}%
-                        </div>
-                    </div>
-                    <div class="probability-item">
-                        <div class="probability-label">Phishing</div>
-                        <div class="probability-value" style="color: var(--danger);">
-                            ${Math.round((probabilities.phishing || 0) * 100)}%
-                        </div>
-                    </div>
-                </div>
-                
-                ${results.explanation ? `
-                    <div class="explanation">
-                        <strong>AI Analysis:</strong><br>
-                        ${escapeHtml(results.explanation)}
-                    </div>
-                ` : ''}
-                
-                ${results.llm_validation ? `
-                    <div class="explanation">
-                        <strong>LLM Validation:</strong><br>
-                        ${formatLlmValidation(results.llm_validation)}
-                    </div>
-                ` : ''}
-            `;
+    <div class="classification-badge ${badgeClass}">
+        ${classification.toUpperCase()}
+    </div>
+    
+    <div class="confidence-display">
+        <div class="confidence-label">Confidence: ${confidence}%</div>
+        <div class="confidence-bar">
+            <div class="confidence-fill" style="width: ${confidence}%"></div>
+        </div>
+    </div>
+    
+    <div class="probability-breakdown">
+        <div class="probability-item">
+            <div class="probability-label">Legitimate</div>
+            <div class="probability-value" style="color: var(--success);">
+                ${Math.round((probabilities.legitimate || 0) * 100)}%
+            </div>
+        </div>
+        <div class="probability-item">
+            <div class="probability-label">Spam</div>
+            <div class="probability-value" style="color: var(--warning);">
+                ${Math.round((probabilities.spam || 0) * 100)}%
+            </div>
+        </div>
+        <div class="probability-item">
+            <div class="probability-label">Phishing</div>
+            <div class="probability-value" style="color: var(--danger);">
+                ${Math.round((probabilities.phishing || 0) * 100)}%
+            </div>
+        </div>
+    </div>
+    
+    ${results.explanation ? `
+        <div class="explanation">
+            <strong>AI Analysis:</strong><br>
+            ${escapeHtml(results.explanation)}
+        </div>
+    ` : ''}
+    
+    ${
+        // Only show LLM validation if toggle is enabled
+        document.getElementById('llmValidation').checked && results.llm_validation ? `
+        <div class="explanation">
+            <strong>LLM Validation:</strong><br>
+            ${formatLlmValidation(results.llm_validation)}
+        </div>
+    ` : ''
+    }
+`
             
             resultsSection.style.display = 'block';
             resultsSection.scrollIntoView({ behavior: 'smooth' });

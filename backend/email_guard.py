@@ -32,7 +32,7 @@ class EmailGuardCLI:
         """Load configuration from file or environment"""
         config = {
             'api_url': os.getenv('EMAIL_GUARD_API_URL', 'http://localhost:5000'),
-            'api_key': os.getenv('EMAIL_GUARD_API_KEY', 'SEG-RICHDALE-2025-APIKEY-48F7A1'),
+            'api_key': os.getenv('API_KEY', 'your_api_key'),
             'model_path': os.getenv('EMAIL_GUARD_MODEL_PATH', './my-3class-model'),
             'timeout': int(os.getenv('EMAIL_GUARD_TIMEOUT', '30'))
         }

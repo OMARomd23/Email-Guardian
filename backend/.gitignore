@@ -2,7 +2,6 @@
 # CRITICAL: This file protects your sensitive data
 
 # Environment variables - NEVER COMMIT
-backend/.env
 .env
 .env.local
 .env.production
@@ -12,7 +11,7 @@ backend/.env
 *.db
 *.sqlite
 *.sqlite3
-backend/email_guardian.db
+email_guardian.db
 
 # API keys and secrets
 secrets.json
@@ -46,7 +45,6 @@ env/
 ENV/
 .venv/
 
-
 # IDE files
 .vscode/
 .idea/
@@ -64,7 +62,7 @@ logs/
 
 # Model files (if too large)
 my-3class-model/
-backend/my-3class-model/
+
 # Node modules
 node_modules/
 

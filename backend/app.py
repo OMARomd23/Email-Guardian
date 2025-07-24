@@ -7,7 +7,7 @@ from datetime import datetime
 import logging
 from functools import wraps
 from dotenv import load_dotenv
-
+ 
 # Load environment variables
 load_dotenv()
 
@@ -34,7 +34,7 @@ limiter = Limiter(
 limiter.init_app(app)
 
 # Configuration
-API_KEY = os.environ.get('API_KEY', 'SEG-RICHDALE-2025-APIKEY-48F7A1')
+API_KEY = os.environ.get('API_KEY', 'your_api_key')
 MODEL_PATH = os.environ.get('MODEL_PATH', './my-3class-model')
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY')
 DATABASE_PATH = os.environ.get('DATABASE_PATH', 'email_guardian.db')
