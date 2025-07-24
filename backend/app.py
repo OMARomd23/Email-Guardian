@@ -358,7 +358,7 @@ if __name__ == '__main__':
     
     logger.info(f"Starting Email Guardian backend on {host}:{port}")
     logger.info(f"Debug mode: {debug}")
-    logger.info(f"API Key configured: {'Yes' if API_KEY != 'SEG-RICHDALE-2025-APIKEY-48F7A1' else 'No (using default)'}")
+    logger.info(f"API Key configured: {'Yes' if API_KEY != 'your-api-key' else 'No (using default)'}")
     logger.info(f"Groq integration: {'Enabled' if groq_validator and groq_validator.enabled else 'Disabled'}")
     
     # Run the app
