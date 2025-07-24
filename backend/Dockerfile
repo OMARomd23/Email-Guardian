@@ -15,7 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy rest of the files
 COPY . .
 
-# Expose port (Cloud Run uses PORT env var it sets itself)
+# Expose port
 ENV PORT=5000
 EXPOSE 5000
 
