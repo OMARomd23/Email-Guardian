@@ -1695,7 +1695,7 @@ function updateSystemStatus(healthData) {
                     <div style="font-size: 0.875rem; color: var(--text-secondary);">
                         API Version: ${healthData.api_version || 'Unknown'}<br>
                         Model Handler: ${healthData.model_handler_available ? 'Available' : 'Unavailable'}<br>
-                        Database: ${healthData.database_available ? 'Available' : 'Unavailable'}<br>
+                        Database: ${healthData.database_status ? 'Available' : 'Unavailable'}<br>
                         ${healthData.groq_model ? `Groq Model: ${healthData.groq_model}<br>` : ''}
                         Last Check: ${new Date().toLocaleTimeString()}
                     </div>
