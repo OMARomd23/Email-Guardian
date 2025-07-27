@@ -1694,8 +1694,8 @@ function updateSystemStatus(healthData) {
                     <h4 style="margin-bottom: 0.5rem;">System Information</h4>
                     <div style="font-size: 0.875rem; color: var(--text-secondary);">
                         API Version: ${healthData.api_version || 'Unknown'}<br>
-                        Model Handler: ${healthData.model_handler_available ? 'Available' : 'Unavailable'}<br>
-                        Database: ${healthData.database_available ? 'Available' : 'Unavailable'}<br>
+                        Model Handler: ${healthData.model_loaded ? 'Available' : 'Unavailable'}<br>
+                        Database: ${healthData.database_status ? 'Connected' : 'Not Connected'}<br>
                         ${healthData.groq_model ? `Groq Model: ${healthData.groq_model}<br>` : ''}
                         Last Check: ${new Date().toLocaleTimeString()}
                     </div>
