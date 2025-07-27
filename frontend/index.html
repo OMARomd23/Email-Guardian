@@ -935,7 +935,7 @@
                     <form id="settingsForm">
                         <div class="form-group">
                             <label class="form-label" for="apiUrl">API URL</label>
-                            <input type="url" class="form-input" id="apiUrl" placeholder="http://localhost:5000" required>
+                            <input type="url" class="form-input" id="apiUrl" placeholder="https://email-guardian-production.up.railway.app" required>
                             <div class="form-help">Enter the base URL of your Email Guardian API</div>
                         </div>
                         
@@ -1015,7 +1015,7 @@
         // Application State
         const AppState = {
             currentTab: 'scanner',
-            apiUrl: localStorage.getItem('apiUrl') || 'http://localhost:5000',
+            apiUrl: localStorage.getItem('apiUrl') || 'https://email-guardian-production.up.railway.app',
             apiKey: localStorage.getItem('apiKey') || '',
             theme: localStorage.getItem('theme') || 'light',
             history: JSON.parse(localStorage.getItem('scanHistory') || '[]'),
