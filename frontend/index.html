@@ -1120,7 +1120,7 @@
                     type="url"
                     class="auth-input"
                     id="authApiUrl"
-                    placeholder="API URL (e.g. http://localhost:5000)"
+                    placeholder="API URL (e.g. https://lively-vibrancy-production.up.railway.app)"
                     required
                     autocomplete="off"
                 >
@@ -1360,7 +1360,7 @@
                     <form id="settingsForm" onsubmit="saveSettings(event)">
                         <div class="form-group">
                             <label class="form-label" for="apiUrl">API URL</label>
-                            <input type="url" class="form-input" id="apiUrl" placeholder="http://172.16.200.192:5000" required>
+                            <input type="url" class="form-input" id="apiUrl" placeholder="https://lively-vibrancy-production.up.railway.app" required>
                             <div class="form-help">Enter the base URL of your Email Guardian API</div>
                         </div>
                         
@@ -1445,7 +1445,7 @@
         // Application State
         const AppState = {
             currentTab: 'scanner',
-            apiUrl: localStorage.getItem('apiUrl') || 'http://172.16.200.192:5000',
+            apiUrl: localStorage.getItem('apiUrl') || 'https://lively-vibrancy-production.up.railway.app',
             apiKey: localStorage.getItem('apiKey') || '',
             userEmail: localStorage.getItem('userEmail') || '',
             theme: localStorage.getItem('theme') || 'light',
